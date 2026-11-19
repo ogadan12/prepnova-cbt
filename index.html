@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PrepNova CBT | JAMB Preparation</title>
+
+    <meta name="description"
+    content="Prepare for JAMB with interactive CBT practice, timed examinations and instant results.">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="js/config.js" defer></script>
+    <script src="js/access.js" defer></script>
+    <script src="js/app.js" defer></script>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<header class="navbar">
+
+    <a href="#" class="brand">
+        <span class="brand-icon">P</span>
+        <span>PrepNova<span class="brand-light"> CBT</span></span>
+    </a>
+
+    <button class="menu-toggle" id="menuToggle"
+    aria-label="Open navigation">
+        ☰
+    </button>
+
+    <nav class="nav-links" id="navLinks">
+        <a href="#home">Home</a>
+        <a href="#subjects">Subjects</a>
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#" class="nav-login" onclick="showAccess(event)">
+            Enter Access Code
+        </a>
+    </nav>
+
+</header>
+
+<!-- LANDING PAGE -->
+<main id="landingPage">
+
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <div class="hero-badge">
+            <span class="pulse"></span>
+            YOUR JAMB SUCCESS STARTS HERE
+        </div>
+
+        <h1>
+            Prepare smarter.<br>
+            Practice better.<br>
+            <span>Score higher.</span>
+        </h1>
+
+        <p class="hero-description">
+            Take your JAMB preparation to the next level with
+            interactive CBT practice, timed examinations and
+            instant performance feedback.
+        </p>
+
+        <div class="hero-buttons">
+
+            <button class="btn btn-primary"
+            onclick="showAccess()">
+                Start Practising →
+            </button>
+
+            <a href="#subjects" class="btn btn-outline">
+                Explore Subjects
+            </a>
+
+        </div>
+
+        <div class="hero-trust">
+            <span>✓ Practice anytime</span>
+            <span>✓ Instant results</span>
+            <span>✓ Mobile friendly</span>
+        </div>
+
+    </div>
+
+    <div class="hero-visual">
+
+        <div class="floating-card floating-top">
+            <span class="floating-icon">🎯</span>
+            <div>
+                <strong>Stay focused</strong>
+                <small>Your preparation matters</small>
+            </div>
+        </div>
+
+        <div class="exam-preview">
+
+            <div class="preview-header">
+                <div>
+                    <small>PREPNOVA CBT</small>
+                    <h3>Practice Examination</h3>
+                </div>
+
+                <span class="live-badge">LIVE</span>
+            </div>
+
+            <div class="preview-progress">
+                <span>Question 12 of 40</span>
+                <span>30%</span>
+            </div>
+
+            <div class="progress-track">
+                <div class="progress-fill"></div>
+            </div>
+
+            <div class="preview-question">
+                <small>BIOLOGY</small>
+
+                <h3>
+                    Which organelle is responsible for
+                    energy production in a cell?
+                </h3>
+            </div>
+
+            <div class="preview-options">
+                <div class="preview-option">A. Ribosome</div>
+                <div class="preview-option selected">B. Mitochondrion ✓</div>
+                <div class="preview-option">C. Nucleus</div>
+                <div class="preview-option">D. Vacuole</div>
+            </div>
+
+            <div class="preview-footer">
+                <span>● Answer selected</span>
+                <span>Continue →</span>
+            </div>
+
+        </div>
+
+        <div class="floating-card floating-bottom">
+            <span class="success-icon">✓</span>
+            <div>
+                <strong>Instant feedback</strong>
+                <small>Understand your performance</small>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- STATS -->
+<section class="stats-section">
+
+    <div class="stat">
+        <h2>04</h2>
+        <p>Core subjects</p>
+    </div>
+
+    <div class="stat">
+        <h2>CBT</h2>
+        <p>Realistic practice</p>
+    </div>
+
+    <div class="stat">
+        <h2>24/7</h2>
+        <p>Practice anytime</p>
+    </div>
+
+    <div class="stat">
+        <h2>100%</h2>
+        <p>Student focused</p>
+    </div>
+
+</section>
+
+<!-- SUBJECTS -->
+<section class="section subjects-section" id="subjects">
+
+    <div class="section-heading">
+
+        <span class="eyebrow">YOUR LEARNING JOURNEY</span>
+
+        <h2>Choose your subject</h2>
+
+        <p>
+            Build confidence by practising questions from
+            your selected JAMB subjects.
+        </p>
+
+    </div>
+
+    <div class="subject-grid">
+
+        <div class="subject-card biology">
+            <div class="subject-icon">🧬</div>
+            <span class="subject-tag">LIFE SCIENCE</span>
+            <h3>Biology</h3>
+            <p>Explore living organisms, cells, ecology and more.</p>
+            <button onclick="showAccess()">Start practising →</button>
+        </div>
+
+        <div class="subject-card chemistry">
+            <div class="subject-icon">⚗️</div>
+            <span class="subject-tag">PHYSICAL SCIENCE</span>
+            <h3>Chemistry</h3>
+            <p>Understand matter, reactions, elements and compounds.</p>
+            <button onclick="showAccess()">Start practising →</button>
+        </div>
+
+        <div class="subject-card physics">
+            <div class="subject-icon">⚛️</div>
+            <span class="subject-tag">PHYSICAL SCIENCE</span>
+            <h3>Physics</h3>
+            <p>Practise mechanics, electricity, waves and energy.</p>
+            <button onclick="showAccess()">Start practising →</button>
+        </div>
+
+        <div class="subject-card english">
+            <div class="subject-icon">📚</div>
+            <span class="subject-tag">LANGUAGE</span>
+            <h3>English Language</h3>
+            <p>Improve comprehension, grammar and vocabulary.</p>
+            <button onclick="showAccess()">Start practising →</button>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- FEATURES -->
+<section class="section features-section" id="features">
+
+    <div class="section-heading">
+
+        <span class="eyebrow">WHY PREPNOVA?</span>
+
+        <h2>Everything you need to prepare</h2>
+
+        <p>
+            A simple and effective environment designed
+            to help students practise with confidence.
+        </p>
+
+    </div>
+
+    <div class="features-grid">
+
+        <div class="feature-card">
+            <div class="feature-icon">⏱️</div>
+            <h3>Timed examinations</h3>
+            <p>Experience examination conditions with a countdown timer.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Instant results</h3>
+            <p>Know your performance immediately after submission.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">💡</div>
+            <h3>Answer explanations</h3>
+            <p>Learn why an answer is correct during practice review.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <h3>Mobile friendly</h3>
+            <p>Practise comfortably on your smartphone or computer.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <h3>Question navigation</h3>
+            <p>Move between questions and monitor your progress.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📈</div>
+            <h3>Better preparation</h3>
+            <p>Identify areas that require more attention.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how-section" id="how-it-works">
+
+    <div class="section-heading">
+
+        <span class="eyebrow">GETTING STARTED</span>
+
+        <h2>Three simple steps</h2>
+
+        <p>Start preparing for your examination today.</p>
+
+    </div>
+
+    <div class="steps-grid">
+
+        <div class="step-card">
+            <span class="step-number">01</span>
+            <h3>Get your access code</h3>
+            <p>Contact the platform administrator to obtain your access code.</p>
+        </div>
+
+        <div class="step-card">
+            <span class="step-number">02</span>
+            <h3>Choose your subjects</h3>
+            <p>Select a subject and choose your preferred practice mode.</p>
+        </div>
+
+        <div class="step-card">
+            <span class="step-number">03</span>
+            <h3>Start practising</h3>
+            <p>Answer questions, submit your examination and review your results.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+
+    <div>
+        <span class="eyebrow">YOUR FUTURE STARTS NOW</span>
+
+        <h2>Ready to take your preparation seriously?</h2>
+
+        <p>
+            Start practising and build the confidence
+            you need for your examination.
+        </p>
+    </div>
+
+    <button class="btn btn-white" onclick="showAccess()">
+        Get Started →
+    </button>
+
+</section>
+
+<footer class="footer">
+
+    <a href="#" class="brand">
+        <span class="brand-icon">P</span>
+        <span>PrepNova CBT</span>
+    </a>
+
+    <p>Preparing students for a brighter academic future.</p>
+
+    <small>© <span id="year"></span> PrepNova CBT. All rights reserved.</small>
+
+</footer>
+
+</main>
+
+<!-- ACCESS SCREEN -->
+<section class="access-screen hidden" id="accessScreen">
+
+    <div class="access-box">
+
+        <button class="back-home" onclick="showLanding()">
+            ← Back to home
+        </button>
+
+        <div class="access-logo">P</div>
+
+        <h2>Welcome to PrepNova</h2>
+
+        <p>Enter your access code to unlock your examination dashboard.</p>
+
+        <form id="accessForm">
+
+            <label for="accessCode">Access code</label>
+
+            <input
+                type="text"
+                id="accessCode"
+                placeholder="Enter your access code"
+                autocomplete="off"
+                required
+            >
+
+            <div id="accessMessage" class="message"></div>
+
+            <button class="btn btn-primary full-width" type="submit">
+                Unlock Access →
+            </button>
+
+        </form>
+
+        <p class="access-help">
+            Don't have an access code?
+            <a id="whatsappLink" href="#" target="_blank">Contact us</a>
+        </p>
+
+    </div>
+
+</section>
+
+<!-- DASHBOARD -->
+<section class="dashboard hidden" id="dashboard">
+
+    <header class="dashboard-header">
+
+        <a href="#" class="brand">
+            <span class="brand-icon">P</span>
+            <span>PrepNova CBT</span>
+        </a>
+
+        <button onclick="logout()" class="logout-btn">
+            Log out
+        </button>
+
+    </header>
+
+    <div class="dashboard-content">
+
+        <div class="welcome-card">
+
+            <div>
+                <span class="eyebrow">STUDENT DASHBOARD</span>
+                <h1>Welcome, Student 👋</h1>
+                <p>Your preparation journey continues here.</p>
+            </div>
+
+            <div class="welcome-decoration">🎓</div>
+
+        </div>
+
+        <div class="dashboard-title">
+            <div>
+                <h2>Choose a subject</h2>
+                <p>Select the subject you want to practise.</p>
+            </div>
+        </div>
+
+        <div class="dashboard-subjects">
+
+            <button class="dash-subject" onclick="selectSubject('Biology')">
+                <span>🧬</span>
+                <div>
+                    <strong>Biology</strong>
+                    <small>Life science</small>
+                </div>
+                <b>→</b>
+            </button>
+
+            <button class="dash-subject" onclick="selectSubject('Chemistry')">
+                <span>⚗️</span>
+                <div>
+                    <strong>Chemistry</strong>
+                    <small>Physical science</small>
+                </div>
+                <b>→</b>
+            </button>
+
+            <button class="dash-subject" onclick="selectSubject('Physics')">
+                <span>⚛️</span>
+                <div>
+                    <strong>Physics</strong>
+                    <small>Physical science</small>
+                </div>
+                <b>→</b>
+            </button>
+
+            <button class="dash-subject" onclick="selectSubject('English')">
+                <span>📚</span>
+                <div>
+                    <strong>English Language</strong>
+                    <small>Language studies</small>
+                </div>
+                <b>→</b>
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- EXAM SETUP -->
+<section class="setup-screen hidden" id="setupScreen">
+
+    <div class="setup-box">
+
+        <button onclick="showDashboard()" class="back-home">
+            ← Dashboard
+        </button>
+
+        <span class="eyebrow">EXAMINATION SETUP</span>
+
+        <h1 id="setupSubject">Biology</h1>
+
+        <p>Choose how you want to practise.</p>
+
+        <div class="mode-card">
+            <h3>📖 Practice Mode</h3>
+            <p>Answer questions at your own pace and review your answers.</p>
+            <button onclick="startExam('practice')" class="btn btn-primary">
+                Start Practice
+            </button>
+        </div>
+
+        <div class="mode-card">
+            <h3>⏱️ Exam Mode</h3>
+            <p>Take a timed examination and see your result after submission.</p>
+            <button onclick="startExam('exam')" class="btn btn-outline">
+                Start Examination
+            </button>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- EXAMINATION -->
+<section class="exam-screen hidden" id="examScreen">
+
+    <header class="exam-header">
+
+        <div class="brand">
+            <span class="brand-icon">P</span>
+            <span>PrepNova CBT</span>
+        </div>
+
+        <div class="exam-info">
+            <span id="examSubject"></span>
+            <span id="examTimer">00:00</span>
+        </div>
+
+    </header>
+
+    <div class="exam-layout">
+
+        <main class="question-panel">
+
+            <div class="question-top">
+                <span id="questionNumber">Question 1</span>
+                <span id="questionCount"></span>
+            </div>
+
+            <div class="question-progress">
+                <div id="questionProgress"></div>
+            </div>
+
+            <h2 id="questionText"></h2>
+
+            <div id="optionsContainer" class="options-container"></div>
+
+            <div class="question-actions">
+
+                <button id="previousBtn" class="btn btn-outline">
+                    ← Previous
+                </button>
+
+                <button id="nextBtn" class="btn btn-primary">
+                    Next →
+                </button>
+
+            </div>
+
+        </main>
+
+        <aside class="question-sidebar">
+
+            <h3>Question Palette</h3>
+
+            <p>Select a question number.</p>
+
+            <div id="questionPalette"></div>
+
+            <div class="palette-legend">
+                <span>● Answered</span>
+                <span>○ Unanswered</span>
+            </div>
+
+            <button onclick="submitExam()" class="btn btn-danger full-width">
+                Submit Examination
+            </button>
+
+        </aside>
+
+    </div>
+
+</section>
+
+<!-- RESULTS -->
+<section class="result-screen hidden" id="resultScreen">
+
+    <div class="result-box">
+
+        <div class="result-icon">🏆</div>
+
+        <span class="eyebrow">EXAMINATION COMPLETED</span>
+
+        <h1>Your Results</h1>
+
+        <div class="score-circle">
+            <strong id="resultPercentage">0%</strong>
+            <small>YOUR SCORE</small>
+        </div>
+
+        <div class="result-stats">
+
+            <div>
+                <strong id="correctCount">0</strong>
+                <small>Correct</small>
+            </div>
+
+            <div>
+                <strong id="wrongCount">0</strong>
+                <small>Incorrect</small>
+            </div>
+
+            <div>
+                <strong id="totalCount">0</strong>
+                <small>Total</small>
+            </div>
+
+        </div>
+
+        <h3 id="resultMessage">Keep practising!</h3>
+
+        <button class="btn btn-primary full-width"
+        onclick="reviewAnswers()">
+            Review Answers
+        </button>
+
+        <button class="btn btn-outline full-width"
+        onclick="showDashboard()">
+            Return to Dashboard
+        </button>
+
+    </div>
+
+</section>
+
+<!-- REVIEW -->
+<section class="review-screen hidden" id="reviewScreen">
+
+    <div class="review-container">
+
+        <button onclick="showDashboard()" class="back-home">
+            ← Dashboard
+        </button>
+
+        <span class="eyebrow">LEARNING REVIEW</span>
+
+        <h1>Review your answers</h1>
+
+        <div id="reviewContainer"></div>
+
+        <button class="btn btn-primary full-width"
+        onclick="showDashboard()">
+            Finish Review
+        </button>
+
+    </div>
+
+</section>
+
+</body>
+</html>

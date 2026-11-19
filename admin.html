@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>PrepNova Admin</title>
+<style>
+  :root { --navy:#14213D; --orange:#FCA311; --bg:#F4F6F9; --border:#D1D5DB; --ok:#15803D; --bad:#B91C1C; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:Arial,Helvetica,sans-serif; background:var(--bg); color:#111827; line-height:1.5; padding:14px; }
+  main { max-width:640px; margin:auto; }
+  h1 { color:var(--navy); font-size:24px; margin:6px 0 4px; }
+  h2 { color:var(--navy); font-size:17px; margin-bottom:8px; }
+  p.hint { color:#4B5563; font-size:13px; margin-bottom:10px; }
+  section { background:#fff; border:1px solid var(--border); border-radius:14px; padding:18px; margin-top:14px; }
+  label { display:block; font-size:13px; font-weight:700; color:var(--navy); margin:12px 0 5px; }
+  input, select, textarea { width:100%; padding:12px; border:1px solid var(--border); border-radius:9px; font:inherit; background:#fff; }
+  textarea { min-height:130px; font-family:monospace; font-size:12px; }
+  .checks { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .checks label { display:flex; align-items:center; gap:8px; margin:0; padding:11px; border:1px solid var(--border); border-radius:9px; font-weight:600; }
+  .checks input { width:auto; }
+  button { width:100%; margin-top:12px; padding:14px; border:none; border-radius:9px; background:var(--navy); color:#fff; font-weight:700; font-size:15px; }
+  button.alt { background:#fff; color:var(--navy); border:2px solid var(--navy); }
+  button:disabled { opacity:.5; }
+  .msg { margin-top:10px; padding:10px 12px; border-radius:8px; font-size:13px; display:none; }
+  .msg.ok { display:block; background:#DCFCE7; color:var(--ok); }
+  .msg.err { display:block; background:#FEE2E2; color:var(--bad); }
+  #newCodes { margin-top:12px; padding:14px; background:#FFF7E6; border:2px solid var(--orange); border-radius:10px; font-family:monospace; font-size:18px; font-weight:700; letter-spacing:1px; white-space:pre-wrap; display:none; }
+  .fp { font-family:monospace; font-weight:700; color:var(--navy); }
+  ol { padding-left:20px; font-size:13px; color:#4B5563; margin-top:6px; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>PrepNova Admin</h1>
+<p class="hint">Runs entirely in your phone's browser. Nothing is sent anywhere.</p>
+
+<section>
+  <h2>1. Master passphrase</h2>
+  <p class="hint">A long phrase only you know (for example 4 or 5 random words). It makes the secret keys for your questions. Use the <b>same</b> phrase every time. If you forget it, you must re-lock your questions and issue new codes.</p>
+  <input type="password" id="pass" placeholder="Your master passphrase" autocomplete="off">
+  <p class="hint" style="margin-top:8px">Check code: <span class="fp" id="fp">—</span> (it must be identical every time you type the same phrase)</p>
+</section>
+
+<section>
+  <h2>2. Make access codes</h2>
+
+  <label>Subjects this code unlocks</label>
+  <div class="checks" id="subjectChecks"></div>
+
+  <label for="exp">Valid until</label>
+  <input type="date" id="exp">
+
+  <label for="count">How many codes</label>
+  <input type="number" id="count" value="1" min="1" max="50">
+
+  <label for="codesJson">Current codes.json (loaded from your site, or paste it)</label>
+  <textarea id="codesJson" placeholder="{}"></textarea>
+  <button class="alt" id="loadBtn" type="button">Load codes.json from my site</button>
+
+  <button id="genBtn" type="button">Generate codes</button>
+  <div class="msg" id="genMsg"></div>
+
+  <div id="newCodes"></div>
+  <button class="alt" id="copyCodesList" type="button" style="display:none">Copy the new codes</button>
+  <button class="alt" id="copyJson" type="button" style="display:none">Copy updated codes.json</button>
+
+  <ol id="uploadSteps" style="display:none">
+    <li>Tap <b>Copy updated codes.json</b>.</li>
+    <li>On GitHub, open your repo, then <b>codes.json</b>, then the pencil (edit).</li>
+    <li>Select all, paste, and tap <b>Commit changes</b>.</li>
+    <li>Wait about a minute, then the new codes work.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>3. Lock a subject's questions</h2>
+  <p class="hint">Paste your questions as a JSON list. The result is a locked file that only students with a code can open.</p>
+
+  <label for="qSubject">Subject</label>
+  <select id="qSubject"></select>
+
+  <label for="qJson">Questions (JSON)</label>
+  <textarea id="qJson" placeholder='[
+  {
+    "question": "Which organelle makes energy?",
+    "options": ["Ribosome", "Mitochondrion", "Nucleus", "Vacuole"],
+    "answer": 1,
+    "explanation": "Mitochondria produce ATP."
+  }
+]'></textarea>
+  <p class="hint" style="margin-top:6px"><b>answer</b> is the position of the correct option, starting from 0 (A=0, B=1, C=2, D=3).</p>
+
+  <button id="encBtn" type="button">Lock questions</button>
+  <div class="msg" id="encMsg"></div>
+
+  <label for="encOut">Locked file content</label>
+  <textarea id="encOut" readonly></textarea>
+  <button class="alt" id="copyEnc" type="button">Copy locked file</button>
+  <ol>
+    <li>On GitHub: <b>Add file</b>, <b>Create new file</b>.</li>
+    <li>File name: <b id="fileName">data/biology.enc.json</b></li>
+    <li>Paste the copied content and commit.</li>
+  </ol>
+</section>
+
+</main>
+
+<script>
+(function () {
+  var SUBJECTS = ['Biology', 'Chemistry', 'Physics', 'English'];
+  var ITER = 200000;
+  var ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  var te = new TextEncoder();
+
+  function b64(u8) { var s = ''; for (var i = 0; i < u8.length; i++) s += String.fromCharCode(u8[i]); return btoa(s); }
+  function unb64(s) { return Uint8Array.from(atob(s), function (c) { return c.charCodeAt(0); }); }
+  function hex(buf) { return Array.from(new Uint8Array(buf)).map(function (b) { return b.toString(16).padStart(2, '0'); }).join(''); }
+
+  async function pbkdf2(secretBytes, saltBytes) {
+    var base = await crypto.subtle.importKey('raw', secretBytes, 'PBKDF2', false, ['deriveBits']);
+    return new Uint8Array(await crypto.subtle.deriveBits(
+      { name: 'PBKDF2', salt: saltBytes, iterations: ITER, hash: 'SHA-256' }, base, 256));
+  }
+
+  async function seal(rawKey, obj) {
+    var iv = crypto.getRandomValues(new Uint8Array(12));
+    var key = await crypto.subtle.importKey('raw', rawKey, 'AES-GCM', false, ['encrypt']);
+    var ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv: iv }, key, te.encode(JSON.stringify(obj)));
+    return { iv: b64(iv), ct: b64(new Uint8Array(ct)) };
+  }
+
+  var Core = {
+    fingerprint: async function (pass) {
+      return hex(await crypto.subtle.digest('SHA-256', te.encode('jcbt-fp:' + pass))).slice(0, 6);
+    },
+    subjectKey: async function (pass, subject) {
+      return b64(await pbkdf2(te.encode(pass), te.encode('jcbt-subject:' + subject)));
+    },
+    newRawCode: function () {
+      var r = crypto.getRandomValues(new Uint8Array(12));
+      return Array.from(r, function (b) { return ALPHABET[b & 31]; }).join('');
+    },
+    makeRecord: async function (raw, exp, keys) {
+      var id = hex(await crypto.subtle.digest('SHA-256', te.encode('jcbt-id:' + raw))).slice(0, 24);
+      var salt = crypto.getRandomValues(new Uint8Array(16));
+      var derived = await pbkdf2(te.encode(raw), salt);
+      var sealed = await seal(derived, { exp: exp, keys: keys });
+      return { id: id, rec: { salt: b64(salt), iv: sealed.iv, ct: sealed.ct } };
+    },
+    lockQuestions: async function (pass, subject, questions) {
+      var keyB64 = await Core.subjectKey(pass, subject);
+      return seal(unb64(keyB64), questions);
+    },
+    validateQuestions: function (list) {
+      if (!Array.isArray(list) || !list.length) return 'The questions must be a list, like [ {...}, {...} ].';
+      for (var i = 0; i < list.length; i++) {
+        var q = list[i], n = 'Question ' + (i + 1) + ': ';
+        if (!q || typeof q.question !== 'string' || !q.question.trim()) return n + 'missing "question".';
+        if (!Array.isArray(q.options) || q.options.length < 2) return n + '"options" needs at least 2 items.';
+        if (!Number.isInteger(q.answer) || q.answer < 0 || q.answer >= q.options.length) return n + '"answer" must be a number from 0 to ' + (q.options.length - 1) + '.';
+      }
+      return '';
+    },
+    formatCode: function (raw) { return raw.match(/.{4}/g).join('-'); }
+  };
+
+  if (typeof module !== 'undefined') module.exports = Core;
+  if (typeof document === 'undefined') return;
+
+  // ---------- UI ----------
+  var $ = function (id) { return document.getElementById(id); };
+
+  function msg(id, text, ok) { var m = $(id); m.textContent = text; m.className = 'msg ' + (ok ? 'ok' : 'err'); }
+
+  function copy(text, btn) {
+    function done() { var old = btn.textContent; btn.textContent = 'Copied ✓'; setTimeout(function () { btn.textContent = old; }, 1500); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else { fallback(); }
+    function fallback() {
+      var t = document.createElement('textarea'); t.value = text; document.body.appendChild(t);
+      t.select(); try { document.execCommand('copy'); done(); } catch (e) {} document.body.removeChild(t);
+    }
+  }
+
+  SUBJECTS.forEach(function (s) {
+    var l = document.createElement('label');
+    l.innerHTML = '<input type="checkbox" value="' + s + '" checked> ' + s;
+    $('subjectChecks').appendChild(l);
+    var o = document.createElement('option'); o.value = s; o.textContent = s; $('qSubject').appendChild(o);
+  });
+
+  var today = new Date(); today.setDate(today.getDate() + 30);
+  $('exp').value = today.toISOString().slice(0, 10);
+
+  function updateFile() { $('fileName').textContent = 'data/' + $('qSubject').value.toLowerCase() + '.enc.json'; }
+  $('qSubject').addEventListener('change', updateFile); updateFile();
+
+  $('pass').addEventListener('input', async function () {
+    var p = $('pass').value;
+    $('fp').textContent = p.length ? await Core.fingerprint(p) : '—';
+  });
+
+  function needPass(id) {
+    var p = $('pass').value;
+    if (p.length < 8) { msg(id, 'Type your master passphrase first (at least 8 characters).', false); return null; }
+    return p;
+  }
+
+  $('loadBtn').addEventListener('click', async function () {
+    try {
+      var r = await fetch('codes.json?t=' + Date.now(), { cache: 'no-store' });
+      if (!r.ok) throw new Error('missing');
+      $('codesJson').value = await r.text();
+      msg('genMsg', 'Loaded your current codes.json.', true);
+    } catch (e) {
+      $('codesJson').value = '{}';
+      msg('genMsg', 'No codes.json on your site yet. Starting a new one.', true);
+    }
+  });
+
+  $('genBtn').addEventListener('click', async function () {
+    var pass = needPass('genMsg'); if (!pass) return;
+
+    var subjects = Array.from(document.querySelectorAll('#subjectChecks input:checked')).map(function (c) { return c.value; });
+    if (!subjects.length) return msg('genMsg', 'Choose at least one subject.', false);
+
+    var exp = $('exp').value;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(exp)) return msg('genMsg', 'Choose an expiry date.', false);
+    if (exp < new Date().toISOString().slice(0, 10)) return msg('genMsg', 'The expiry date is in the past.', false);
+
+    var count = Math.max(1, Math.min(50, parseInt($('count').value, 10) || 1));
+
+    var codes;
+    try {
+      codes = JSON.parse($('codesJson').value.trim() || '{}');
+      if (!codes || typeof codes !== 'object' || Array.isArray(codes)) throw new Error('bad');
+    } catch (e) {
+      return msg('genMsg', 'The codes.json box is not valid. Tap "Load codes.json from my site", or type {} if you have none yet.', false);
+    }
+
+    var btn = $('genBtn'); btn.disabled = true;
+    try {
+      msg('genMsg', 'Preparing keys...', true);
+      var keys = {};
+      for (var i = 0; i < subjects.length; i++) keys[subjects[i]] = await Core.subjectKey(pass, subjects[i]);
+
+      var out = [];
+      for (var n = 0; n < count; n++) {
+        msg('genMsg', 'Making code ' + (n + 1) + ' of ' + count + '...', true);
+        var raw = Core.newRawCode();
+        var made = await Core.makeRecord(raw, exp, keys);
+        codes[made.id] = made.rec;
+        out.push(Core.formatCode(raw));
+      }
+
+      $('codesJson').value = JSON.stringify(codes);
+      $('newCodes').textContent = out.join('\n');
+      $('newCodes').style.display = 'block';
+      $('copyCodesList').style.display = 'block';
+      $('copyJson').style.display = 'block';
+      $('uploadSteps').style.display = 'block';
+      msg('genMsg', count + ' code(s) made. Now copy codes.json and upload it to GitHub (steps below).', true);
+    } catch (e) {
+      msg('genMsg', 'Something went wrong: ' + e.message, false);
+    } finally { btn.disabled = false; }
+  });
+
+  $('copyCodesList').addEventListener('click', function () { copy($('newCodes').textContent, this); });
+  $('copyJson').addEventListener('click', function () { copy($('codesJson').value, this); });
+
+  $('encBtn').addEventListener('click', async function () {
+    var pass = needPass('encMsg'); if (!pass) return;
+    var list;
+    try { list = JSON.parse($('qJson').value); } catch (e) {
+      return msg('encMsg', 'Your questions are not valid JSON. Check commas, quotes and brackets. (' + e.message + ')', false);
+    }
+    var problem = Core.validateQuestions(list);
+    if (problem) return msg('encMsg', problem, false);
+
+    var btn = $('encBtn'); btn.disabled = true;
+    try {
+      var sealed = await Core.lockQuestions(pass, $('qSubject').value, list);
+      $('encOut').value = JSON.stringify(sealed);
+      msg('encMsg', list.length + ' questions locked for ' + $('qSubject').value + '.', true);
+    } catch (e) { msg('encMsg', 'Something went wrong: ' + e.message, false); }
+    finally { btn.disabled = false; }
+  });
+
+  $('copyEnc').addEventListener('click', function () { copy($('encOut').value, this); });
+})();
+</script>
+</body>
+</html>
